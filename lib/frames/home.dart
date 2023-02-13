@@ -16,7 +16,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String apiKey = "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";
+  String apiKey = "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";
   final TextEditingController textController = TextEditingController();
   final TextEditingController _textFieldController = TextEditingController();
   final List<ChatMessage> messages = <ChatMessage>[];
@@ -47,9 +47,10 @@ class _HomeState extends State<Home> {
     messages.insert(0, message);
     isTyping = true;
     apiCall(msg: textController.text.trim());
-    textController.clear();
+    setState(() {
+      textController.clear();
+    });
 
-    setState(() {});
   }
 
   void insertNewData(String response) {
@@ -65,10 +66,10 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: //const Color.fromRGBO(12, 12, 12, 1.0),
+        backgroundColor: const Color.fromRGBO(190, 190, 190, 1.0),
         drawer: naviDrawer(),
         appBar: AppBar(
-          elevation: 0,
+            elevation: 0,
             actions: <Widget>[
               IconButton(
                   onPressed: () {
@@ -93,7 +94,7 @@ class _HomeState extends State<Home> {
                   icon: const Icon(Icons.save_alt_sharp))
             ],
             backgroundColor: Colors.black,
-            title:const Text(
+            title: const Text(
               "Chat",
               style: TextStyle(color: Colors.white),
             )),
@@ -136,8 +137,8 @@ class _HomeState extends State<Home> {
           ),
           Container(
             margin: const EdgeInsets.only(top: 5, bottom: 5),
-            decoration:
-                const BoxDecoration(shape: BoxShape.circle, color: Colors.black),
+            decoration: const BoxDecoration(
+                shape: BoxShape.circle, color: Colors.black),
             child: IconButton(
               icon: const Icon(
                 Icons.send,
@@ -183,7 +184,7 @@ class _HomeState extends State<Home> {
   saveDoc(String name) async {
     if (messages.isNotEmpty) {
       final pdfCreate = await PdfCreator.generate(messages, name);
-      PdfCreator.openFile(pdfCreate);
+      //PdfCreator.openFile(pdfCreate);
     }
   }
 
@@ -202,8 +203,9 @@ class _HomeState extends State<Home> {
     setState(() {});
   }
 
-  Dio dio = Dio();
+
   void apiCall({required String msg}) async {
+    Dio dio = Dio();
     dio.options.headers['content-Type'] = 'application/json';
     dio.options.headers["authorization"] = "Bearer $apiKey";
 
@@ -211,7 +213,7 @@ class _HomeState extends State<Home> {
       "model": "text-davinci-003",
       "prompt": msg,
       "temperature": 0,
-      "max_tokens": 1000
+      "max_tokens": 800
     };
 
     var response =
