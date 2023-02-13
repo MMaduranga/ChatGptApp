@@ -18,8 +18,8 @@ class ChatMessage extends StatelessWidget {
       alignment: sender == "user" ? Alignment.topRight : Alignment.topLeft,
       nip: sender == "user" ? BubbleNip.rightTop : BubbleNip.leftTop,
       color: sender == "user"
-          ? const Color.fromRGBO(74, 221, 221, 1.0)
-          : const Color.fromRGBO(154, 157, 255, 1.0),
+          ? const Color.fromRGBO(236, 236, 236, 1.0)
+          : const Color.fromRGBO(236, 236, 236, 1.0),
       child: Text(text,
           textAlign: sender == "user" ? TextAlign.right : TextAlign.left),
     );
